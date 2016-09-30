@@ -1,0 +1,21 @@
+This is a README file for CMPS180 course.
+
+Lab1:
+	Create four tables in schema lab1 as follow:
+	Stores (store_id, address, manager)
+	Customers (customer_id, name, address, email)
+	Products (product_id, name, category, manufacturer)
+	Sales (store_id, customer_id, product_id, date, quantity, price, shipped)
+
+	Notes:
+		\l	list all database
+		\dn	list all schema
+		\dt	list all table
+		\d xxx	list talbe named xxx
+		\q
+
+		change password,
+		ALTER ROLE <username> WITH PASSWORD 'new password';
+
+		change search_path,
+		ALTER ROLE <username> SET SEARCH_PATH TO <schema>;
