@@ -14,8 +14,34 @@ Lab1:
 		\d xxx	list talbe named xxx
 		\q
 
+	DDL:(Data Definition Language)
 		change password,
-		ALTER ROLE <username> WITH PASSWORD 'new password';
+			ALTER ROLE <username> WITH PASSWORD 'new password';
 
 		change search_path,
-		ALTER ROLE <username> SET SEARCH_PATH TO <schema>;
+			ALTER ROLE <username> SET SEARCH_PATH TO <schema>;
+
+		add attributes to table schema,
+			ALTER TABLE <table> ADD <attr> <DATATYPE>;
+
+		drop attributes of table schema,
+			ALTER TABLE <table> DROP <attr>;
+
+		default value,
+			simply put DEFAULT 'value' after DATATYPE ex.
+			gender CHAR(1) DEFAULT '?';
+
+		primary key,
+			gender CHAR(1) PRIMARY KEY;
+			or
+			gender CHAR(1); 
+			PRIMARY KEY (gender);
+
+		drop schema, (CASCADE will drop all table contents)
+			DROP SCHEMA <schema> CASCADE;
+
+		drop table,
+			DROP TABLE <table>;
+
+	DML:(Data Manipulate Language)
+		
