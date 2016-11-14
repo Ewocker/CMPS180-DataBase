@@ -1,0 +1,1 @@
+CREATE INDEX nameaddress ON customers(name, address);
