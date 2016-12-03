@@ -59,8 +59,8 @@ public class SalesApplication {
     }
 
     /**
-     * Add a product to the database. If the product’s name and manufacturer
-     * already exists in the database, return the product’s id. Otherwise,
+     * Add a product to the database. If the product's name and manufacturer
+     * already exists in the database, return the product's id. Otherwise,
      * add the product to the database, and return the new product id.
      * When a new product is added to the database, its category should be NULL.
      *
