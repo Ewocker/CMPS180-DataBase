@@ -6,7 +6,7 @@ import java.util.*;
  * A sample class that connects to PostgreSQL and runs methods of the StoreApplication class.
  *
  */
-public class Driver
+public class Drive 
 {
     public static void main(String[] args) throws ClassNotFoundException,
         FileNotFoundException, IOException, SQLException {
@@ -16,7 +16,7 @@ public class Driver
 
     connection = DriverManager.getConnection(
             "jdbc:postgresql://cmps180-db.lt.ucsc.edu/database",
-            "username", "password");  //Making the Connection 
+            "ylin62", "Ew850509");  //Making the Connection 
 
     StoreApplication app = new StoreApplication(connection);
 
@@ -25,6 +25,7 @@ public class Driver
     for (String title : titles)
         System.out.println(title);
     
+/*
     String firstName = "John";
     String lastName = "Farnsworth";
     String email = "john.farnsworth@customer.org";
@@ -33,7 +34,9 @@ public class Driver
     String postalCode = "56883";
     String phone = "51917807050";
     app.addCustomer(firstName, lastName, email, address, district, postalCode, phone);
+*/
 
     connection.close(); //Closing Connection
-    }
+  
+  }
 }

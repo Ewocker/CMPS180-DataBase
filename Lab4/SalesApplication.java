@@ -36,12 +36,23 @@ public class SalesApplication {
      * You only need to consider entries in the table Sales, i.e. the method should not take into account
      * sales that are in the table NewSales and are not yet merged with the table Sales.
      */
-    public List<String> getProductNamesWithTotalPriceLargerThan(double amount) {
+    public List<String> getProductNamesWithTotalPriceLargerThan(double amount) throws SQLException {
         List<String> result = new ArrayList<String>();
         // your code here
-
-        
-        
+        String sqlstr = "SELECT DISTINCT name FROM Sales, Products" +
+			" WHERE quantity * unit_price > ?" +
+			" 	and Sales.product_id = Products.product_id";
+			
+        PreparedStatement prest = connection.prepareStatement(sqlstr);
+        prest.setDouble(1, amount);
+        ResultSet rs = prest.executeQuery();
+        while(rs.next())
+        {
+            System.out.print("Column 1 returned ");
+            String product_name = rs.getString(1);
+            System.out.println(product_name);
+            result.add(product_name);
+        }
         // end of your code
         return result;  
     }
@@ -60,11 +71,22 @@ public class SalesApplication {
      */
     public int addProduct(String name, String manufacturer) {
         int productId = 0;
-        // your code here
+//        // your code here
+//        String sqlstr = "INSERT INTO Products VALUES";
+//        
+//        PreparedStatement prest = connection.prepareStatement(sqlstr);
+//        prest.setDouble(1, amount);
+//        ResultSet rs = prest.executeQuery();
+//        while(rs.next())
+//        {
+//            System.out.print("Column 1 returned ");
+//            String product_name = rs.getString(1);
+//            System.out.println(product_name);
+//            result.add(product_name);
+//        }
+//        
+//        
         
-        
-        
-
         // end of your code
         return productId;
     }

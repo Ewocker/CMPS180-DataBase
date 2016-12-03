@@ -36,7 +36,13 @@ public class RunSalesApplication
              * The sample code in RunStoresApplication.java should be useful.
              * That code tests other methods for a different database schema.
              * Your code below: */
-            
+           	SalesApplication app = new SalesApplication(connection);
+
+		double amount = 1.5;
+		List<String> titles = app.getProductNamesWithTotalPriceLargerThan(amount);
+		for (String title : titles)
+			System.out.println(title);
+ 
 
 
             
