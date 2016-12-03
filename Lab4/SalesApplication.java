@@ -121,6 +121,7 @@ public class SalesApplication {
             connection.commit();
             System.out.println("Item : " + name + "-" + manufacturer + " Added");
             
+        // Insertion Fail
         }catch (SQLException e ) {
             System.out.print("SQLException" + e);
             try {
@@ -128,6 +129,7 @@ public class SalesApplication {
             } catch (SQLException ex){
                 System.out.print("rollback -> SQLException" + ex);
             }
+        // Make AutoCommit back to true since the transaction is only for this function
         }finally {
             try {
                 connection.setAutoCommit(true);

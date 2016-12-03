@@ -36,29 +36,37 @@ public class RunSalesApplication
              * The sample code in RunStoresApplication.java should be useful.
              * That code tests other methods for a different database schema.
              * Your code below: */
+            
+            // Create Object
            	SalesApplication app = new SalesApplication(connection);
 
-		double amount = 500;
-		List<String> titles = app.getProductNamesWithTotalPriceLargerThan(amount);
+            double amount = 500;
+            List<String> titles = app.getProductNamesWithTotalPriceLargerThan(amount);
             System.out.println("Result of getProductNamesWithTotalPriceLargerThan: ");
-		for (String title : titles)
-			System.out.println(title);
- 
-        System.out.println("");
-        System.out.println("Result of addProduct: ");
-        int id = app.addProduct("Iphone 7","Apple");
-        System.out.println(id);
-        id = app.addProduct("b","Apple");
-        System.out.println(id);
-        id = app.addProduct("Iphone 7","c");
-        System.out.println(id);
-        id = app.addProduct("TestName","TestManufacturer");
-        System.out.println(id);
+            for (String title : titles)
+                System.out.println(title);
+            
+            System.out.println("");
+            System.out.println("Result of addProduct: ");
+            // Already Exist
+            int id = app.addProduct("Iphone 7","Apple");
+            System.out.println(id);
+            // Not Yet Exist
+            id = app.addProduct("TestName","TestManufacturer");
+            System.out.println(id);
+            
+            //Other Tests
+//            id = app.addProduct("b","Apple");
+//            System.out.println(id);
+//            id = app.addProduct("Iphone 7","c");
+//            System.out.println(id);
             
             /*******************
             * Your code ends here */
             
     	}
+        
+        // Connection Fail Case
     	catch (SQLException | ClassNotFoundException e) {
     		System.out.println("Error while connecting to database: " + e);
     		e.printStackTrace();
