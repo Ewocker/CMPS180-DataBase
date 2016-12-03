@@ -36,25 +36,26 @@ public class SalesApplication {
      * You only need to consider entries in the table Sales, i.e. the method should not take into account
      * sales that are in the table NewSales and are not yet merged with the table Sales.
      */
-    public List<String> getProductNamesWithTotalPriceLargerThan(double amount) throws SQLException {
+    public List<String> getProductNamesWithTotalPriceLargerThan(double amount) {
         List<String> result = new ArrayList<String>();
         // your code here
         String sqlstr = "SELECT DISTINCT name FROM Sales, Products" +
 			" WHERE quantity * unit_price > ?" +
 			" 	and Sales.product_id = Products.product_id";
-			
-        PreparedStatement prest = connection.prepareStatement(sqlstr);
-        prest.setDouble(1, amount);
-        ResultSet rs = prest.executeQuery();
-        while(rs.next())
-        {
-            System.out.print("Column 1 returned ");
-            String product_name = rs.getString(1);
-            System.out.println(product_name);
-            result.add(product_name);
+        try {
+            PreparedStatement prest = connection.prepareStatement(sqlstr);
+            prest.setDouble(1, amount);
+            ResultSet rs = prest.executeQuery();
+            while(rs.next())
+            {
+                String product_name = rs.getString(1);
+//                System.out.println(product_name);
+                result.add(product_name);
+            }
+        }catch (SQLException e ) {
+            System.out.print("SQLException" + e);
         }
-        // end of your code
-        return result;  
+        return result;
     }
 
     /**
@@ -71,21 +72,69 @@ public class SalesApplication {
      */
     public int addProduct(String name, String manufacturer) {
         int productId = 0;
-//        // your code here
-//        String sqlstr = "INSERT INTO Products VALUES";
-//        
-//        PreparedStatement prest = connection.prepareStatement(sqlstr);
-//        prest.setDouble(1, amount);
-//        ResultSet rs = prest.executeQuery();
-//        while(rs.next())
-//        {
-//            System.out.print("Column 1 returned ");
-//            String product_name = rs.getString(1);
-//            System.out.println(product_name);
-//            result.add(product_name);
-//        }
-//        
-//        
+        try {
+            
+            connection.setAutoCommit(false);
+            Statement st = connection.createStatement();
+            
+            // Set Transaction level
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            ResultSet rs = st.executeQuery("SELECT current_setting('transaction_isolation')");
+            rs.next();
+            String iso = rs.getString(1);
+            if (iso.equals("serializable")){
+                System.out.println("Set Isolation Level to Serializable");
+            } else {
+                System.out.println("Uable to set Isolation Level, currently " + iso);
+                System.exit(0);
+            }
+            
+            // Check Already Exist
+            rs = st.executeQuery("SELECT product_id ,name, manufacturer FROM Products");
+            int new_id = 0;
+            while(rs.next())
+            {
+                int item_id = rs.getInt("product_id");
+                String product_name = rs.getString("name").trim();
+                String product_manufacturer = rs.getString("manufacturer").trim();
+                // Exist
+                if (manufacturer.equals(product_manufacturer) && name.equals(product_name)){
+                    System.out.println("Item : " + name + "-" + manufacturer + " Already Exist");
+                    return item_id;
+                }
+                //Gen Id
+                if (new_id <= item_id){
+                    new_id = item_id + 1;
+                }
+            }
+            
+            // Not Exist, insert
+            String sqlstr = "INSERT INTO Products VALUES (?,?,NULL,?)";
+            PreparedStatement prest = connection.prepareStatement(sqlstr);
+            prest.setInt(1, new_id);
+            prest.setString(2, name);
+            prest.setString(3, manufacturer);
+            prest.execute();
+            productId = new_id;
+            
+            // Commit
+            connection.commit();
+            System.out.println("Item : " + name + "-" + manufacturer + " Added");
+            
+        }catch (SQLException e ) {
+            System.out.print("SQLException" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex){
+                System.out.print("rollback -> SQLException" + ex);
+            }
+        }finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex){
+                System.out.print("setAutoCommit -> SQLException" + ex);
+            }
+        }
         
         // end of your code
         return productId;

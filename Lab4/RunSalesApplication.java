@@ -38,13 +38,22 @@ public class RunSalesApplication
              * Your code below: */
            	SalesApplication app = new SalesApplication(connection);
 
-		double amount = 1.5;
+		double amount = 500;
 		List<String> titles = app.getProductNamesWithTotalPriceLargerThan(amount);
+            System.out.println("Result of getProductNamesWithTotalPriceLargerThan: ");
 		for (String title : titles)
 			System.out.println(title);
  
-
-
+        System.out.println("");
+        System.out.println("Result of addProduct: ");
+        int id = app.addProduct("Iphone 7","Apple");
+        System.out.println(id);
+        id = app.addProduct("b","Apple");
+        System.out.println(id);
+        id = app.addProduct("Iphone 7","c");
+        System.out.println(id);
+        id = app.addProduct("TestName","TestManufacturer");
+        System.out.println(id);
             
             /*******************
             * Your code ends here */
