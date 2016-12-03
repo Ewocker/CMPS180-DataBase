@@ -28,6 +28,7 @@ public class RunSalesApplication
                                                      "jdbc:postgresql://cmps180-db.lt.ucsc.edu/ylin62",
                                                      "ylin62",
                                                      "Ew850509");
+                                                    // This is not my UCSC account num, so I will just leave it here
             
             if (connection != null)
                 System.out.println("Connected to the database!");
